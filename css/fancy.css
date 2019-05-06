@@ -1,0 +1,50 @@
+input[type="text"].fancy {
+    outline: none;
+    border: 2px solid #3c3c3c;
+    border-radius: 10px;
+    height: 40px;
+    background: transparent;
+    color: white;
+    padding-left: 16px;
+    font-size: 20px;
+    font-family: monospace;
+    transition: 0.3s ease-in-out all;
+}
+
+input[type="text"].fancy:focus {
+    border-color: blueviolet;
+}
+
+button.fancy {
+    margin-left: 5px;
+    background: blueviolet;
+    outline: none;
+    border: 0;
+    color: white;
+    font-family: monospace;
+    font-size: 20px;
+    height: 46px;
+    border: 2px solid blueviolet;
+    border-bottom-color: #7023b8;
+    border-radius: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
+    cursor: pointer;
+}
+
+.file-upload.fancy {
+    height: 40px;
+    color: #888;
+    font-family: monospace;
+    font-size: 20px;
+    background: transparent;
+    border: 2px solid #3c3c3c;
+    padding: 9px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out all;
+}
+
+.file-upload.fancy:hover {
+    border-color: blueviolet;
+}

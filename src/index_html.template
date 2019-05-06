@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Presentation</title>
+
+        <link href="../../css/background.css" rel="stylesheet">
+        <link href="../../css/iframe.css" rel="stylesheet">
+    </head>
+    <body>
+        <iframe id="frame" src="slides/1.html"></iframe>
+        
+        <div class="panel" id="psd" onclick="onScreenPrev()"></div>
+        <div class="panel" id="nsd"onclick="onScreenNext()"></div>
+    </body>
+
+    <script>
+        var proportions = [16, 9];
+        var frame = document.getElementById("frame");
+
+        // I know it ain't pretty but it seems like that's the only way to make it work
+        if(window.innerHeight / window.innerWidth > proportions[1] / proportions[0]) {
+            frame.style.width = "100%";
+            frame.style.height = (window.innerWidth / proportions[0] * proportions[1]) + "px";
+        }
+
+        else {
+            frame.style.width = (window.innerHeight / proportions[1] * proportions[0]) + "px";
+            frame.style.height = "100%";
+        }
+
+        window.onresize = () => {
+            if(window.innerHeight / window.innerWidth > proportions[1] / proportions[0]) {
+                frame.style.width = "100%";
+                frame.style.height = (window.innerWidth / proportions[0] * proportions[1]) + "px";
+            }
+
+            else {
+                frame.style.width = (window.innerHeight / proportions[1] * proportions[0]) + "px";
+                frame.style.height = "100%";
+            }
+        };
+        function onScreenNext(){
+            var currentSlide = parseInt(frame.src.split("/")[frame.src.split("/").length - 1].split(".")[0]);
+            nextSlide(currentSlide);
+        }
+        function onScreenPrev(){
+            var currentSlide = parseInt(frame.src.split("/")[frame.src.split("/").length - 1].split(".")[0]);
+            prevSlide(currentSlide);
+        }
+        function prevSlide(currentSlide) {
+            if (currentSlide > 1)
+                frame.src = "slides/" + (currentSlide - 1) + ".html";
+        }
+        
+        function nextSlide(currentSlide) {
+            frame.src = "slides/" + (currentSlide + 1) + ".html";
+        }
+
+        document.onkeydown = (e) => {
+            e = e || window.event;
+
+            var currentSlide = parseInt(frame.src.split("/")[frame.src.split("/").length - 1].split(".")[0]);
+
+            if (e.keyCode == 37) // ARROW LEFT
+                prevSlide(currentSlide);
+
+            else if (e.keyCode == 39) // ARROW RIGHT
+                nextSlide(currentSlide);                
+
+            else if(e.keyCode == 77) { // M
+                var slide_index = prompt("Move to slide:", currentSlide);
+                
+                if (slide_index != null)
+                    frame.src = "slides/" + slide_index + ".html";
+            }
+
+            else if (e.keyCode == 80) { // P
+                proportions = (JSON.stringify(proportions) == JSON.stringify([16, 9])) ? [4, 3] : [16, 9];
+                
+                if(window.innerHeight / window.innerWidth > proportions[1] / proportions[0]) {
+                    frame.style.width = "100%";
+                    frame.style.height = (window.innerWidth / proportions[0] * proportions[1]) + "px";
+                }
+
+                else {
+                    frame.style.width = (window.innerHeight / proportions[1] * proportions[0]) + "px";
+                    frame.style.height = "100%";
+                }
+            }
+        };
+    </script>
+</html>

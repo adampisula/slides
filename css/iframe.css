@@ -1,0 +1,48 @@
+iframe {
+    outline: 0;
+    border: 0;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 100%;
+
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.panel {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 12%;
+    z-index: 1;
+    cursor: pointer;
+    color: #FFFFFF00;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.panel p {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 72px;
+}
+
+.panel:hover {
+    background: #F0F0F022;
+    
+    color: #F0F0F055;
+}
+
+#psd {
+    left: 0px;
+}
+
+#nsd {
+    right: 0px;
+}

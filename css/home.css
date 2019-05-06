@@ -1,0 +1,68 @@
+*::selection {
+    background: blueviolet;
+    color: black;
+}
+
+*::-moz-selection {
+    background: blueviolet;
+    color: black;
+}
+
+h1.title {
+    font-size: 54px;
+}
+
+h1 {
+    color: #d1d1d1;
+    text-align: center;
+    font-family: monospace;
+    margin-bottom: 25px;
+}
+
+.goto {
+    width: 400px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    background: #333333;
+    border-bottom: solid 2px blueviolet;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.upload {
+    width: 400px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    background: #333333;
+    border-bottom: solid 2px blueviolet;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 40px;
+    text-align: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.file-upload.fancy {
+    margin-right: 5px;
+}
+
+p.authors {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 16px;
+    color: #d1d1d1;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+p.authors a {
+    color: #b4b4b4;
+}
