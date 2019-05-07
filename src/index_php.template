@@ -1,3 +1,8 @@
+<?php
+
+    $format = $_GET['format'];
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,35 +13,35 @@
         <link href="../../css/iframe.css" rel="stylesheet">
     </head>
     <body>
-        <iframe id="frame" src="slides/1.html"></iframe>
+        <iframe id="frame" src="slides/1.<?php echo $format; ?>"></iframe>
         
         <div class="panel" id="psd" onclick="onScreenPrev()"></div>
         <div class="panel" id="nsd"onclick="onScreenNext()"></div>
     </body>
 
     <script>
-        var proportions = [16, 9];
+        var ratio = [16, 9];
         var frame = document.getElementById("frame");
 
         // I know it ain't pretty but it seems like that's the only way to make it work
-        if(window.innerHeight / window.innerWidth > proportions[1] / proportions[0]) {
+        if(window.innerHeight / window.innerWidth > ratio[1] / ratio[0]) {
             frame.style.width = "100%";
-            frame.style.height = (window.innerWidth / proportions[0] * proportions[1]) + "px";
+            frame.style.height = (window.innerWidth / ratio[0] * ratio[1]) + "px";
         }
 
         else {
-            frame.style.width = (window.innerHeight / proportions[1] * proportions[0]) + "px";
+            frame.style.width = (window.innerHeight / ratio[1] * ratio[0]) + "px";
             frame.style.height = "100%";
         }
 
         window.onresize = () => {
-            if(window.innerHeight / window.innerWidth > proportions[1] / proportions[0]) {
+            if(window.innerHeight / window.innerWidth > ratio[1] / ratio[0]) {
                 frame.style.width = "100%";
-                frame.style.height = (window.innerWidth / proportions[0] * proportions[1]) + "px";
+                frame.style.height = (window.innerWidth / ratio[0] * ratio[1]) + "px";
             }
 
             else {
-                frame.style.width = (window.innerHeight / proportions[1] * proportions[0]) + "px";
+                frame.style.width = (window.innerHeight / ratio[1] * ratio[0]) + "px";
                 frame.style.height = "100%";
             }
         };
@@ -50,11 +55,11 @@
         }
         function prevSlide(currentSlide) {
             if (currentSlide > 1)
-                frame.src = "slides/" + (currentSlide - 1) + ".html";
+                frame.src = "slides/" + (currentSlide - 1) + ".<?php echo $format; ?>";
         }
         
         function nextSlide(currentSlide) {
-            frame.src = "slides/" + (currentSlide + 1) + ".html";
+            frame.src = "slides/" + (currentSlide + 1) + ".<?php echo $format; ?>";
         }
 
         document.onkeydown = (e) => {
@@ -72,19 +77,19 @@
                 var slide_index = prompt("Move to slide:", currentSlide);
                 
                 if (slide_index != null)
-                    frame.src = "slides/" + slide_index + ".html";
+                    frame.src = "slides/" + slide_index + ".<?php echo $format; ?>";
             }
 
             else if (e.keyCode == 80) { // P
-                proportions = (JSON.stringify(proportions) == JSON.stringify([16, 9])) ? [4, 3] : [16, 9];
+                ratio = (JSON.stringify(ratio) == JSON.stringify([16, 9])) ? [4, 3] : [16, 9];
                 
-                if(window.innerHeight / window.innerWidth > proportions[1] / proportions[0]) {
+                if(window.innerHeight / window.innerWidth > ratio[1] / ratio[0]) {
                     frame.style.width = "100%";
-                    frame.style.height = (window.innerWidth / proportions[0] * proportions[1]) + "px";
+                    frame.style.height = (window.innerWidth / ratio[0] * ratio[1]) + "px";
                 }
 
                 else {
-                    frame.style.width = (window.innerHeight / proportions[1] * proportions[0]) + "px";
+                    frame.style.width = (window.innerHeight / ratio[1] * ratio[0]) + "px";
                     frame.style.height = "100%";
                 }
             }
