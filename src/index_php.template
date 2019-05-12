@@ -1,6 +1,8 @@
 <?php
 
-    $format = $_GET['format'];
+    $path = "slides/";
+    $files = array_diff(scandir($path), array('.', '..'));
+    $format = end(explode(".", $files[2]));
 
 ?>
 <!DOCTYPE html>
@@ -17,6 +19,11 @@
         
         <div class="panel" id="psd" onclick="onScreenPrev()"></div>
         <div class="panel" id="nsd"onclick="onScreenNext()"></div>
+	<div class="panel" id="preview">
+        <iframe src="slides/2.<?php echo $format; ?>"></iframe> 
+
+
+        </div>
     </body>
 
     <script>

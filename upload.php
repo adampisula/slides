@@ -1,31 +1,7 @@
 <?php
 
-    function redirect_post($url, array $data, array $headers = null) {
-        $params = array(
-            'http' => array(
-                'method' => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        if (!is_null($headers)) {
-            $params['http']['header'] = '';
-            foreach ($headers as $k => $v) {
-                $params['http']['header'] .= "$k: $v\n";
-            }
-        }
-        $ctx = stream_context_create($params);
-        $fp = @fopen($url, 'rb', false, $ctx);
-        if ($fp) {
-            echo @stream_get_contents($fp);
-            die();
-        } else {
-            // Error
-            throw new Exception("Error loading '$url', $php_errormsg");
-        }
-    }
-
     $directory = "presentation/";
-    $extensions = array("tar");
+    $extensions = array("tar", "zip");
 
     if(isset($_FILES["presentation_file"])) {
         $errors = array();
@@ -56,11 +32,27 @@
 
         if(empty($errors) == true) {
             move_uploaded_file($file_tmp, $directory.$id."/".$id.".".$file_ext);
-            try {
-                $phar = new PharData($directory.$id."/".$id.".".$file_ext);
-                $phar->extractTo($directory.$id);
-            } catch (Exception $e) {                
-                $errors[] = "Whoops, we couldn't unpack your presentation. Here's your error: ".$e->getMessage()."<br>";
+
+            if($file_ext == "tar") {
+                try {
+                    $phar = new PharData($directory.$id."/".$id.".".$file_ext);
+                    $phar->extractTo($directory.$id);
+                } catch (Exception $e) {                
+                    $errors[] = "Whoops, we couldn't unpack your presentation. Here's your error: 
+".$e->getMessage()."<br>";
+                }
+            }
+
+            else if($file_ext == "zip") {
+                $zip = new ZipArchive;
+
+                if($zip->open($directory.$id."/".$id.".".$file_ext) === TRUE) {
+                    $zip->extractTo($directory.$id);
+                    $zip->close();
+                }
+
+                else
+                    $errors[] = "Whoops, we couldn't unpack your presentation.";
             }
 
             if(!copy("src/index_php.template", $directory.$id."/index.php"))
@@ -77,7 +69,7 @@
                 $errors[] = "It looks like your presentation's broken! ¯\_(ツ)_/¯";
 
             echo $id;
-            header("Location: ".$directory.$id."?format=".$format);
+            header("Location: ".$directory.$id);
 
             if(!empty($errors)) {
                 rmdir($directory.$id);
